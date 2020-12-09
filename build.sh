@@ -4,7 +4,11 @@ set -eu
 set -x
 
 telem=${TELEMETRY-false}
-plugins=${PLUGINS-xuqingfeng/caddy-rate-limit,pyed/ipfilter,miekg/caddy-prometheus}
+plugins=${PLUGINS-xuqingfeng/caddy-rate-limit,pyed/ipfilter,miekg/caddy-prometheus,nicolasazrak/caddy-cache,captncraig/cors,epicagency/caddy-expires,captncraig/caddy-realip}
+
+echo 'go init mod caddy' && {
+    go mod init caddy  
+}
 
 echo 'go get' && {
     go get -v github.com/caddyserver/caddy"${VERSION+@}${VERSION-}"
@@ -32,7 +36,7 @@ echo 'modify main.go' && {
 }
 
 echo 'go build (static)' && {
-    CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -tags netgo -ldflags '-w'
+    CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -tags DISABLE_QUIC,netgo -ldflags '-w'
 }
 
 echo 'done' && {

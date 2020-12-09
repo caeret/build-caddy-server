@@ -1,14 +1,13 @@
-FROM golang:1-alpine
+FROM golang:1.13-alpine
 
 LABEL maintainer "NODA, Kai <nodakai@gmail.com>"
 
+RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.tuna.tsinghua.edu.cn/g' /etc/apk/repositories
+
 RUN apk add --no-cache git sed
 
-WORKDIR /root
+WORKDIR /app
 ENV GO111MODULE=on
-COPY main.go .
-RUN go mod init caddy
+ENV GOPROXY="https://goproxy.io,direct"
 
-COPY build.sh .
-
-CMD /root/build.sh
+CMD /app/build.sh
