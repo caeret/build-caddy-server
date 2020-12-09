@@ -4,7 +4,7 @@ set -eu
 set -x
 
 telem=${TELEMETRY-false}
-plugins=${PLUGINS-xuqingfeng/caddy-rate-limit,pyed/ipfilter,miekg/caddy-prometheus,nicolasazrak/caddy-cache,captncraig/cors,epicagency/caddy-expires,captncraig/caddy-realip}
+plugins=${PLUGINS-xuqingfeng/caddy-rate-limit,pyed/ipfilter,caeret/caddy-prometheus,nicolasazrak/caddy-cache,captncraig/cors,epicagency/caddy-expires,captncraig/caddy-realip}
 
 echo 'go init mod caddy' && {
     go mod init caddy  
