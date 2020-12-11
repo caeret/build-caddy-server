@@ -4,14 +4,19 @@ set -eu
 set -x
 
 telem=${TELEMETRY-false}
-plugins=${PLUGINS-xuqingfeng/caddy-rate-limit,pyed/ipfilter,caeret/caddy-prometheus,nicolasazrak/caddy-cache,captncraig/cors,epicagency/caddy-expires,captncraig/caddy-realip,github.com/caddyserver/dnsproviders/cloudflare,captncraig/cors/caddy}
+plugins=${PLUGINS-xuqingfeng/caddy-rate-limit,pyed/ipfilter,caeret/caddy-prometheus,nicolasazrak/caddy-cache,captncraig/cors,epicagency/caddy-expires,captncraig/caddy-realip,github.com/caddyserver/dnsproviders/cloudflare,captncraig/cors/caddy,caddyserver/forwardproxy}
 
 echo 'go init mod caddy' && {
+    mkdir /tmp/build
+    cp main.go /tmp/build
+    cd /tmp/build
     go mod init caddy  
 }
 
 echo 'go get' && {
+    go get github.com/lucas-clemente/quic-go
     go get -v github.com/caddyserver/caddy"${VERSION+@}${VERSION-}"
+    cat go.mod
 }
 
 echo 'modify main.go' && {
